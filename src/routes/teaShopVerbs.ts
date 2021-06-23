@@ -7,6 +7,7 @@ import TeaShopDao from '../controllers/TeaShopDao'
 const teaShopDao = new TeaShopDao();
 
 /**
+ * Calls TeaShopDAO.getAllTeaShops() and returns http status code
  * 
  * @param req 
  * @param res 
@@ -18,6 +19,7 @@ export async function getTeaShops(req: Request, res: Response) {
 }
 
 /**
+ * Calls TeaShopDAO.getTeaShopById() and returns http status code
  * 
  * @param req 
  * @param res 
@@ -30,6 +32,8 @@ export async function getTeaShopById(req: Request, res: Response) {
 }
 
 /**
+ * Calls TeaShopDAO.addOrUpdateTeaShop() and returns http status code
+ * We handle the case where the user sumbits an empty JSON
  * 
  * @param req 
  * @param res 
@@ -46,6 +50,7 @@ export async function addOrUpdateTeaShop(req: Request, res: Response) {
 }
 
 /**
+ * Calls TeaShopDAO.deleteTeaShop() and returns http status code
  * 
  * @param req 
  * @param res 

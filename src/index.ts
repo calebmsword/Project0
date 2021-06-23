@@ -1,6 +1,5 @@
 import baseRouter from "./routes/baseRouter";
-import { Request, Response } from 'express';
-import express from 'express';
+import express, { Request, Response } from 'express';
 const app = express();
 app.use(express.json());
 

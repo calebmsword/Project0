@@ -1,4 +1,20 @@
-import Address from './Address'; 
+export interface IAddress {
+    streetName: string;
+    state: string;
+    areaCode: string;
+}
+
+export class Address implements IAddress {
+    streetName: string;
+    state: string;
+    areaCode: string;
+
+    constructor (streetName: string, state: string, areaCode: string){
+        this.streetName = streetName;
+        this.state = state;
+        this.areaCode = areaCode;
+    }
+} 
 
 export interface ITeaShop{
     id: string;

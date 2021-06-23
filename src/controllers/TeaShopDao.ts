@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 require('dotenv').config();
-import { ITeaShop } from '../models/TeaShop';
-import { IAddress } from '../models/Address';
+
+import TeaShop, { ITeaShop, IAddress, Address } from '../models/TeaShop';
 
 AWS.config.update({
     region: process.env.AWS_DEFAULT_REGION,
@@ -13,8 +13,8 @@ const dynamoClient = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = 'tea-time-api';
 
 export interface ITeaShopDao{
-    getAllTeaShops: () => Promise<ITeaShop[]>;
-    getTeaShopById: (id: string) => Promise<ITeaShop | null>;
+    getAllTeaShops: () => Promise<TeaShop[]>;
+    getTeaShopById: (id: string) => Promise<TeaShop | null>;
     addOrUpdateTeaShop: (teaShop: ITeaShop) => Promise<void>;
     deleteTeaShop: (id: string) => Promise<void>;
 }
@@ -22,34 +22,36 @@ export interface ITeaShopDao{
 class TeaShopDao implements ITeaShopDao {
 
     /**
+     * Returns an array containing all TeaShops in database
      * 
      * @returns 
      */
-    public async getAllTeaShops(): Promise<ITeaShop[]> {
+    public async getAllTeaShops(): Promise<TeaShop[]> {
         const params = {
             TableName: TABLE_NAME,
         };
         const shops = await dynamoClient.scan(params).promise();
-        console.log(shops.Items);
-        return shops.Items as ITeaShop[];
+        return shops.Items as TeaShop[];
     }
 
     /**
+    * Returns TeaShop corresponding to partition key (TeaShop.id)
     * 
     * @param id 
     * @returns 
     */
-    public async getTeaShopById(id: string): Promise<ITeaShop | null> {
+    public async getTeaShopById(id: string): Promise<TeaShop | null> {
         const params = {
             TableName: TABLE_NAME,
             Key: {
                 id,
             }
         }
-        return await dynamoClient.get(params).promise() as ITeaShop;
+        return dynamoClient.get(params).promise() as TeaShop;
     }
 
     /**
+     * Used for post/put verbs. Used to add new TeaShops or update preexisting TeaShops
      * 
      * @param teaShop 
      * @returns 
@@ -58,11 +60,15 @@ class TeaShopDao implements ITeaShopDao {
         const params = {
             TableName: TABLE_NAME,
             Item: teaShop,
+            Key: {
+                "id": teaShop.id
+            }
         }
-        return await dynamoClient.put(params).promise();
+        return dynamoClient.put(params).promise();
     }
 
     /**
+     * Removes TeaShop with given partition key from database
      * 
      * @param id 
      * @returns 
@@ -74,7 +80,7 @@ class TeaShopDao implements ITeaShopDao {
                 id,
             }
         }
-        return await dynamoClient.delete(params).promise();
+        return dynamoClient.delete(params).promise();
     }
 }
 
