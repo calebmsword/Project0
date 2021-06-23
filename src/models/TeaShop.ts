@@ -1,14 +1,4 @@
-export class Address {
-    streetName: string;
-    state: string;
-    areaCode: string;
-
-    constructor (streetName: string, state: string, areaCode: string){
-        this.streetName = streetName;
-        this.state = state;
-        this.areaCode = areaCode;
-    }
-}
+import Address from './Address'; 
 
 export interface ITeaShop{
     id: string;
