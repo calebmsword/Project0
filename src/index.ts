@@ -1,8 +1,8 @@
-const express = require('express');
+import baseRouter from "./routes/baseRouter";
+import { Request, Response } from 'express';
+import express from 'express';
 const app = express();
 app.use(express.json());
-import baseRouter from './routes/baseRouter'
-import { Request, Response } from 'express';
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!'); // This will serve your request to '/'.

@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 require('dotenv').config();
 import { ITeaShop } from '../models/TeaShop';
+import { IAddress } from '../models/Address';
 
 AWS.config.update({
     region: process.env.AWS_DEFAULT_REGION,
@@ -12,7 +13,7 @@ const dynamoClient = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = 'tea-time-api';
 
 export interface ITeaShopDao{
-    getTeaShops: () => Promise<ITeaShop[]>;
+    getAllTeaShops: () => Promise<ITeaShop[]>;
     getTeaShopById: (id: string) => Promise<ITeaShop | null>;
     addOrUpdateTeaShop: (teaShop: ITeaShop) => Promise<void>;
     deleteTeaShop: (id: string) => Promise<void>;
@@ -24,7 +25,7 @@ class TeaShopDao implements ITeaShopDao {
      * 
      * @returns 
      */
-    public async getTeaShops(): Promise<ITeaShop[]> {
+    public async getAllTeaShops(): Promise<ITeaShop[]> {
         const params = {
             TableName: TABLE_NAME,
         };

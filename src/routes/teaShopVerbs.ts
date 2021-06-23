@@ -1,8 +1,5 @@
-import 'module-alias/register';
-
 import { Request, Response } from 'express';
 import { paramMissingError } from '../shared/constants';
-
 import StatusCodes from 'http-status-codes';
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
@@ -16,7 +13,7 @@ const teaShopDao = new TeaShopDao();
  * @returns 
  */
 export async function getTeaShops(req: Request, res: Response) {
-    const teaShops = await teaShopDao.getTeaShops();
+    const teaShops = await teaShopDao.getAllTeaShops();
     return res.status(OK).json({teaShops});
 }
 
