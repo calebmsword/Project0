@@ -6,7 +6,7 @@ const teaShopDao = new TeaShopDao();
 To understand how jest was set up for this project, see
 https://basarat.gitbook.io/typescript/intro-1/jest
 
-To understand the (done) parameter, see
+To understand the "done" parameter, see
 https://jestjs.io/docs/asynchronous
 */
 
