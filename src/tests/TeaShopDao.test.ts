@@ -3,19 +3,42 @@ import { exampleTeaShop } from '../shared/constants';
 const teaShopDao = new TeaShopDao();
 
 /*
-To understand  how jest was implemented in this project, see
+To understand how jest was set up for this project, see
 https://basarat.gitbook.io/typescript/intro-1/jest
+
+To understand the (done) parameter, see
+https://jestjs.io/docs/asynchronous
 */
 
-test('Testing TeaShopDao.addOrUpdateTeaShop()', () => {
-    teaShopDao.addOrUpdateTeaShop(exampleTeaShop).then(p => {
+test('Testing TeaShopDao.addOrUpdateTeaShop()', done => {
+    teaShopDao.addOrUpdateTeaShop(exampleTeaShop)
+    .then( p => {
             expect(p).toContain(exampleTeaShop);
-    }).catch( () => {/** */} );
+    })
+    .catch( () => {
+        /** 
+        * 
+        */
+    })
+    .then( p => {
+        teaShopDao.deleteTeaShop(exampleTeaShop.id);
+        done();
+    });
 });
 
-test('Testing TeaShopDao.getTeaShopById()', () => {
+test('Testing TeaShopDao.getTeaShopById()', done => {
     teaShopDao.addOrUpdateTeaShop(exampleTeaShop);
-    teaShopDao.getTeaShopById(exampleTeaShop.id).then( p => {
+    teaShopDao.getTeaShopById(exampleTeaShop.id)
+    .then( p => {
         expect(p).toBe(exampleTeaShop);
-    }).catch( () => {/** */} );
+    })
+    .catch( () => {
+        /** 
+        * 
+        */
+    })
+    .then( p => {
+        teaShopDao.deleteTeaShop(exampleTeaShop.id);
+        done();
+    });
 });
